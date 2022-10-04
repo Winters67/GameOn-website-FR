@@ -11,14 +11,13 @@
 /* Landing Page */
 
 body {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  background-image: url("background.png");
+  margin: auto;
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
-  margin: 0 auto;
+  
+  
+ 
 }
 
 p {
@@ -69,10 +68,13 @@ img {
 }
 
 @media screen and (max-width: 768px) {
+  
   .topnav a {display: none;}
   .topnav a.icon {
     float: right;
     display: block;
+    color: #ff0000;
+
   }
 }
 
@@ -91,14 +93,45 @@ img {
 }
 
 
-
+/* Modification du css  */
  @media screen and (max-width: 540px) {
+  
+ .topnav{
+  padding: 10px;
+  margin :10px
+ }
   .topnav a {display: none;}
   .topnav a.icon {
     float: right;
     display: block;
     margin-top: -15px;
+    
+   
   }
+  .header-logo img {  height: 20px;
+  }
+
+  .hero-content{
+    min-width: auto !important;
+    padding: 5px;
+    
+  }
+  .hero-content h1 {
+
+    font-size: 2.1rem;
+
+   
+  }
+  .hero-content .hero-text {
+     font-size: 0.7rem;
+     margin-top: 20px;
+   
+  }
+  footer .copyrights {
+    margin: auto;
+  font-size: 0.8rem; 
+  }
+  
 } 
 
 main {
@@ -163,14 +196,35 @@ main {
   z-index: 1;
   left: 0;
   top: 0;
-  height: 100%;
+  height:100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(26, 39, 156, 0.4);
+  background-color: white
+}
+
+@media screen and (max-width: 540px){
+.bground{
+
+  top : 50px;
+}
+.modal-body{
+  padding-bottom: 30px;
+ 
+}
+.bground .content {
+  margin: 0 ;
+
+}.bground .content .modal-body {
+  margin:  ;
+  
+  
+}
+
+
 }
 
 .content {
-  margin: 5% auto;
+  margin : 5% auto  ;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
@@ -405,7 +459,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  /* min-height: 93vh; */
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
