@@ -22,11 +22,16 @@ function launchModal() {
 
 // les regex
 
+
 const prenom = document.getElementById("first");
 const nom = document.getElementById("last");
+const email = document.getElementById("email");
 
+const regexname = /^[a-z A-Z]{2,25}$/;
+
+
+let valuePrenom, valueNom, valueEmail;
 // Prénom
-let valuePrenom, valueNom;
 prenom.addEventListener("input", (e) => {
   valuePrenom;
   if (e.target.value.length == 0) {
@@ -43,7 +48,7 @@ prenom.addEventListener("input", (e) => {
     valuePrenom = null;
   }
 
-  if (e.target.value.match(/^[a-z A-Z]{2,25}$/)) {
+  if (e.target.value.match(regexname)) {
     prenom.parentElement.removeAttribute("data-error-visible", "true");
     prenom.parentElement.removesetAttribute("data-error", erreur);
     valuePrenom = e.target.value;
@@ -52,7 +57,7 @@ prenom.addEventListener("input", (e) => {
   }
 
   if (
-    !e.target.value.match(/^[a-z A-Z]{2,25}$/) &&
+    !e.target.value.match(regexname) &&
     e.target.value.length > 3 &&
     e.target.value.length < 25
   ) {
@@ -100,3 +105,19 @@ nom.addEventListener("input", (e) => {
 });
 
 // Email
+
+email.addEventListener("input", (e) => {
+  valueEmail;
+  if (e.target.value.length == 0) {
+    erreur = " Nom manquant";
+    console.log("rien");
+    nom.parentElement.setAttribute("data-error-visible", "true");
+    nom.parentElement.setAttribute("data-error", erreur);
+    valueNom = null;
+    console.log(valueNom);
+  } else if (e.target.value.length < 2 || e.target.value.length > 25) {
+    erreur = "veuillez entrer 2 caractères ou plus dans le champ nom ";
+    nom.parentElement.setAttribute("data-error-visible", "true");
+    nom.parentElement.setAttribute("data-error", erreur);
+    valueNom = null;
+  }
