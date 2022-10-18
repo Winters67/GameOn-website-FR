@@ -12,6 +12,7 @@
     />
   </head>
   <body>
+   <!---------------------------------Header------------------------------->
     <header>
       <div class="topnav" id="myTopnav">
         <div class="header-logo">
@@ -31,54 +32,45 @@
       </div>
     </div>
   </header>
+    <!---------------------------------Main------------------------------->
     <main>
-      <div class="hero-section">
-        <div class="hero-content">
-          <h1 class="hero-headline">
-            Marathon national<br>
-            de jeux vidéos
-          </h1>
-          <p class="hero-text">
-            Vous aimez jouer ? Notre prochain évènement gaming est ouvert
-            aux réservations... Places limitées !
-          </p>
+      
+ <!---------------------------------Section hero section ------------------------------->
+        <section class="hero-section">
+          <div class="hero-content">
+            <h1 class="hero-headline">
+              Marathon national<br>
+              de jeux vidéos
+            </h1>
+            <p class="hero-text">
+              Vous aimez jouer ? Notre prochain évènement gaming est ouvert
+              aux réservations... Places limitées !
+            </p>
+            <button class="btn-signup modal-btn">
+              je m'inscris
+            </button>
+          </div>
+          <div class="hero-img">
+            <img src="./bg_img.jpg" alt="img" />
+          </div>
           <button class="btn-signup modal-btn">
             je m'inscris
           </button>
-        </div>
-        <div class="hero-img">
-          <img src="./bg_img.jpg" alt="img" />
-        </div>
-        <button class="btn-signup modal-btn">
-          je m'inscris
-        </button>
-      </div>
+            </section>
+ <!---------------------------------- Formulaire ------------------------------->
           <div class="bground">
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-          
-          
-<!---------------------------------- Formulaire ------------------------------->
-
-            <form 
-              id="inscription"
+          <form id="reserve"
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="";
-            >
-          <!-- Prénom -->
-              <div
-                class="formData">
+               onsubmit="return validate();">
+            
+          <div class="formData">
                 <label for="first">Prénom</label><br>
-                <input
-                  class="text-control"
-                  type="text"
-                  id="first"
-                  name="first"
-                  minlength="2"
-                /><br>
+                <input class="text-control"type="text" id="first" name="first" minlength="2"/><br>
                 </div>
               <!-- Nom -->
               <div
@@ -116,20 +108,24 @@
               </div>
               <!-- jeux -->
               <div
-                class="formData">
+               class="formData">
                 <label>À combien de tournois GameOn avez-vous déjà participé ?</label><br>
                 <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
               </div>
               <p class="text-label">A quel tournoi souhaitez-vous participer cette année ?</p>
               <div
-                class="formData">
+              class="formData"
+              id="radio">
+
                 <input
                   class="checkbox-input"
                   type="radio"
                   id="location1"
                   name="location"
                   value="New York"
+                
                 />
+              
                 <label class="checkbox-label" for="location1">
                   <span class="checkbox-icon"></span>
                   New York</label
@@ -140,6 +136,7 @@
                   id="location2"
                   name="location"
                   value="San Francisco"
+                  
                 />
                 <label class="checkbox-label" for="location2">
                   <span class="checkbox-icon"></span>
@@ -193,20 +190,15 @@
 
 <!-- Condition -->
 
-              <div
+              <div id="cgv"
                 class="formData">
-                <input
-                  class="checkbox-input"
-                  type="checkbox"
-                  id="checkboxall"
-                  checked
-                />
-                <label class="checkbox2-label" for="checkbox1" required>
+                <input class="checkbox-input" name="radioCgv" type="checkbox" id="checkbox1"  />
+                <label class="checkbox2-label" for="checkbox1">
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
                 <br>
-                <input class="checkbox-input" type="checkbox" id="checkbox2" />
+                <input class="checkbox-input"   type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
                   <span class="checkbox-icon"></span>
                   Je souhaite être prévenu des prochains évènements.

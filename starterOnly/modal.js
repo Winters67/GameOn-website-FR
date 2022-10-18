@@ -24,7 +24,7 @@ function launchModal() {
 const closeModal = document.getElementsByClassName("close")[0];
 closeModal.onclick = function () {
   modalbg.style.display = "none";
-  document.getElementById("inscription").reset();
+  document.getElementById("reserve").reset();
 };
 
 // Déclaration variable
@@ -33,28 +33,48 @@ const nom = document.getElementById("last");
 const email = document.getElementById("email");
 const naissance = document.getElementById("birthdate");
 const nombre = document.getElementById("quantity");
+const locationName = document.getElementsByName("location");
+const radiocgv = document.getElementsByName("radioCgv");
+const radioContainer = document.getElementById("radio");
+const cgvContainer = document.getElementById("cgv");
 
-// les regex
+// les regex ------------------------------------------------
+
 const regexName = /^[a-z A-Z]{2,25}$/;
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-let valuePrenom, valueNom, valueEmail, valueNaissance, valueNombre;
+let valuePrenom,
+  valueNom,
+  valueEmail,
+  valueNaissance,
+  valueNombre,
+  valueTournaments;
 
-// Prénom
+  
+// fonction qui affiche les erreurs dans le formulaire
+function inputValidation(e) {
+  if (e.value !== true) {
+    e.parentElement.setAttribute("data-error-visible", "true");
+    e.parentElement.setAttribute("data-error", erreur);
+  } else {
+    e.parentElement.removeAttribute("data-error-visible");
+    e.parentElement.removeAttribute("data-error");
+  }
+}
+
+// Prénom ------------ ------------------------------------------------------
 prenom.addEventListener("input", (e) => {
   valuePrenom;
 
   if (e.target.value.length == 0) {
     console.log("rien");
     erreur = " prénom manquant";
-    prenom.parentElement.setAttribute("data-error-visible", "true");
-    prenom.parentElement.setAttribute("data-error", erreur);
+    inputValidation(prenom, erreur);
     valuePrenom = null;
     console.log(valuePrenom);
   } else if (e.target.value.length < 2 || e.target.value.length > 25) {
     erreur = "veuillez entrer 2 caractères ou plus dans le champ prénom ";
-    prenom.parentElement.setAttribute("data-error-visible", "true");
-    prenom.parentElement.setAttribute("data-error", erreur);
+    inputValidation(prenom, erreur);
     valuePrenom = null;
   }
   if (
@@ -63,34 +83,31 @@ prenom.addEventListener("input", (e) => {
     e.target.value.length < 25
   ) {
     erreur = "les caractères spéciaux ne sont pas autorisés";
-    prenom.parentElement.setAttribute("data-error-visible", "true");
-    prenom.parentElement.setAttribute("data-error", erreur);
+    inputValidation(prenom, erreur);
     valuePrenom = null;
     console.log(valuePrenom);
   }
   if (e.target.value.match(regexName)) {
-    prenom.parentElement.removeAttribute("data-error-visible", "true");
-    prenom.parentElement.removeAttribute("data-error");
+    inputValidation(prenom, erreur);
     valuePrenom = e.target.value;
     console.log("succes regex prénom");
     console.log(valuePrenom);
   }
 });
 
-// nom
+// nom --------------------------------------------------------
+
 nom.addEventListener("input", (e) => {
   valueNom;
   if (e.target.value.length == 0) {
     erreur = " Nom manquant";
     console.log("rien");
-    nom.parentElement.setAttribute("data-error-visible", "true");
-    nom.parentElement.setAttribute("data-error", erreur);
+    inputValidation(nom, erreur);
     valueNom = null;
     console.log(valueNom);
   } else if (e.target.value.length < 2 || e.target.value.length > 25) {
     erreur = "veuillez entrer 2 caractères ou plus dans le champ nom ";
-    nom.parentElement.setAttribute("data-error-visible", "true");
-    nom.parentElement.setAttribute("data-error", erreur);
+    inputValidation(nom, erreur);
     valueNom = null;
   }
   if (
@@ -99,82 +116,115 @@ nom.addEventListener("input", (e) => {
     e.target.value.length < 25
   ) {
     erreur = "les caractères spéciaux ne sont pas autorisés";
-    nom.parentElement.setAttribute("data-error-visible", "true");
-    nom.parentElement.setAttribute("data-error", erreur);
+    inputValidation(nom, erreur);
     valueNom = null;
   }
   if (e.target.value.match(regexName)) {
-    nom.parentElement.removeAttribute("data-error-visible", "true");
-    nom.parentElement.removeAttribute("data-error");
+    inputValidation(nom, erreur);
     valueNom = e.target.value;
     console.log("succes regex nom");
     console.log(valueNom);
   }
 });
 
-// Email
+// Email ---------------------------------------------------------------
 
 email.addEventListener("input", (e) => {
   valueEmail;
   if (e.target.value.length == 0) {
     erreur = " Email manquant";
     console.log("rien");
-    email.parentElement.setAttribute("data-error-visible", "true");
-    email.parentElement.setAttribute("data-error", erreur);
+    inputValidation(email, erreur);
     valueEmail = null;
     console.log(valueEmail);
   } else if (e.target.value.match(regexEmail)) {
-    email.parentElement.removeAttribute("data-error-visible", "true");
-    email.parentElement.removeAttribute("data-error");
+    inputValidation(email, erreur);
     valueEmail = e.target.value;
     console.log("succes regex Email");
   }
   if (!e.target.value.match(regexEmail) && !e.target.value.length == 0) {
     erreur = "Veuillez saisir une adresse e-mail valide :  example@email.com ";
-    email.parentElement.setAttribute("data-error-visible", "true");
-    email.parentElement.setAttribute("data-error", erreur);
+    inputValidation(email, erreur);
     valueEmail = null;
   }
 });
 
-// date de naissance
+// date de naissance --------------------------------------------------------
 
 naissance.addEventListener("input", (e) => {
   valueNaissance;
   if (e.target.value == null || e.target.value == "") {
     erreur = "Vous devez entrer votre date de naissance valide";
     console.log("date de naissance vide");
-    naissance.parentElement.setAttribute("data-error-visible", "true");
-    naissance.parentElement.setAttribute("data-error", erreur);
+    inputValidation(naissance, erreur);
     valueNaissance = null;
   } else if (!e.target.value == null || !e.target.value == "") {
-    naissance.parentElement.removeAttribute("data-error-visible", "true");
-    naissance.parentElement.removeAttribute("data-error");
+    inputValidation(naissance, erreur);
     valueNaissance = e.target.value;
     console.log("succes date de naissance");
   }
 });
 
-// Nombre de participation
+// Nombre de participation-----------------------------------------------------
 
 nombre.addEventListener("input", (e) => {
   valueNombre;
   if (e.target.value == "" || e.target.value >= 99) {
     erreur = "Vous devez saisir un nombre entre 0 et 99";
-    nombre.parentElement.setAttribute("data-error-visible", "true");
-    nombre.parentElement.setAttribute("data-error", erreur);
+    inputValidation(nombre, erreur);
     valueNombre = null;
   } else if (!e.target.value == null || !e.target.value == "") {
-    nombre.parentElement.removeAttribute("data-error-visible", "true");
-    nombre.parentElement.removeAttribute("data-error");
+    inputValidation(nombre, erreur);
     valueNombre = e.target.value;
     console.log("succes nombre correcte");
   }
 });
 
+// Checkbox -----------------------------------------------
+function radioChecked() {
+  let radio = "";
+  for (let i = 0, length = locationName.length; i < length; i++) {
+    if (locationName[i].checked) {
+      radio = "checked";
+      break;
+    }
+  }
+  if (radio !== "checked") {
+    radioContainer.setAttribute("data-error-visible", "true");
+    radioContainer.setAttribute(
+      "data-error",
+      "Vous devez selectionner un tournoi !"
+    );
+    validation = false;
+  } else {
+    radioContainer.removeAttribute("data-error-visible");
+    radioContainer.removeAttribute("data-error");
+  }
+}
+// condition général -------------------------------
+function cgvChecked() {
+  let radio = "";
+  for (let i = 0, length = radiocgv.length; i < length; i++) {
+    if (radiocgv[i].checked) {
+      radio = "checked";
+      break;
+    }
+  }
+  if (radio !== "checked") {
+    cgvContainer.setAttribute("data-error-visible", "true");
+    cgvContainer.setAttribute(
+      "data-error",
+      "Veuillez accepter les condition d' utilisation !"
+    );
+    validation = false;
+  } else {
+    cgvContainer.removeAttribute("data-error-visible");
+    cgvContainer.removeAttribute("data-error");
+  }
+}
 // envoi du formulaire
 
-inscription.addEventListener("submit", function (e) {
+reserve.addEventListener("submit", function (e) {
   e.preventDefault();
   console.log("formulaire bloquer");
 
@@ -186,8 +236,19 @@ inscription.addEventListener("submit", function (e) {
       valueNaissance,
       valueNombre,
     };
+
     console.log(data);
-  } else {
-    alert("les champs sont vide");
+  } else if ((cgvChecked(), radioChecked()));
+  else {
+    alert("veuillez remplir les champs vides !");
   }
 });
+
+// function validate() {
+//   "click", launchModal;
+
+//   // launch modal form
+//   function launchModal() {
+//     modalbg.style.display = "block";
+//   }
+// }
