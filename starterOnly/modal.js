@@ -12,12 +12,16 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
+const ModalThx = document.querySelector(".bg");
+const modalThx = document.querySelectorAll(".modal-btn2");
+
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+  closeModalThx();
 }
 
 // Close modal
@@ -26,6 +30,16 @@ closeModal.onclick = function () {
   modalbg.style.display = "none";
   document.getElementById("reserve").reset();
 };
+
+// Modal THX
+function launchModalThx() {
+  ModalThx.style.display = "block";
+}
+
+// Close modal THX
+function closeModalThx() {
+  ModalThx.style.display = "none";
+}
 
 // Déclaration variable
 const prenom = document.getElementById("first");
@@ -49,8 +63,8 @@ let valuePrenom,
   valueNaissance,
   valueNombre,
   valueTournaments;
+let erreur;
 
-  
 // fonction qui affiche les erreurs dans le formulaire
 function inputValidation(e) {
   if (e.value !== true) {
@@ -59,6 +73,16 @@ function inputValidation(e) {
   } else {
     e.parentElement.removeAttribute("data-error-visible");
     e.parentElement.removeAttribute("data-error");
+  }
+}
+
+function inputInValidation(e) {
+  if (e.value !== true) {
+    e.parentElement.removeAttribute("data-error-visible");
+    e.parentElement.removeAttribute("data-error");
+  } else {
+    e.parentElement.setAttribute("data-error-visible", "true");
+    e.parentElement.setAttribute("data-error", erreur);
   }
 }
 
@@ -88,10 +112,11 @@ prenom.addEventListener("input", (e) => {
     console.log(valuePrenom);
   }
   if (e.target.value.match(regexName)) {
-    inputValidation(prenom, erreur);
+    inputInValidation(prenom, erreur);
     valuePrenom = e.target.value;
     console.log("succes regex prénom");
     console.log(valuePrenom);
+    return true;
   }
 });
 
@@ -120,7 +145,7 @@ nom.addEventListener("input", (e) => {
     valueNom = null;
   }
   if (e.target.value.match(regexName)) {
-    inputValidation(nom, erreur);
+    inputInValidation(nom, erreur);
     valueNom = e.target.value;
     console.log("succes regex nom");
     console.log(valueNom);
@@ -138,7 +163,7 @@ email.addEventListener("input", (e) => {
     valueEmail = null;
     console.log(valueEmail);
   } else if (e.target.value.match(regexEmail)) {
-    inputValidation(email, erreur);
+    inputInValidation(email, erreur);
     valueEmail = e.target.value;
     console.log("succes regex Email");
   }
@@ -159,7 +184,7 @@ naissance.addEventListener("input", (e) => {
     inputValidation(naissance, erreur);
     valueNaissance = null;
   } else if (!e.target.value == null || !e.target.value == "") {
-    inputValidation(naissance, erreur);
+    inputInValidation(naissance, erreur);
     valueNaissance = e.target.value;
     console.log("succes date de naissance");
   }
@@ -174,7 +199,7 @@ nombre.addEventListener("input", (e) => {
     inputValidation(nombre, erreur);
     valueNombre = null;
   } else if (!e.target.value == null || !e.target.value == "") {
-    inputValidation(nombre, erreur);
+    inputInValidation(nombre, erreur);
     valueNombre = e.target.value;
     console.log("succes nombre correcte");
   }
@@ -195,14 +220,14 @@ function radioChecked() {
       "data-error",
       "Vous devez selectionner un tournoi !"
     );
-    validation = false;
   } else {
     radioContainer.removeAttribute("data-error-visible");
     radioContainer.removeAttribute("data-error");
+    return true;
   }
 }
 // condition général -------------------------------
-function cgvChecked() {
+function cgvChecked(e) {
   let radio = "";
   for (let i = 0, length = radiocgv.length; i < length; i++) {
     if (radiocgv[i].checked) {
@@ -216,39 +241,45 @@ function cgvChecked() {
       "data-error",
       "Veuillez accepter les condition d' utilisation !"
     );
-    validation = false;
   } else {
     cgvContainer.removeAttribute("data-error-visible");
     cgvContainer.removeAttribute("data-error");
   }
 }
-// envoi du formulaire
 
+// envoi du formulaire
 reserve.addEventListener("submit", function (e) {
   e.preventDefault();
-  console.log("formulaire bloquer");
-
-  if (valuePrenom && valueNom && valueEmail && valueNaissance && valueNombre) {
-    const data = {
-      valuePrenom,
-      valueNom,
-      valueEmail,
-      valueNaissance,
-      valueNombre,
-    };
-
-    console.log(data);
-  } else if ((cgvChecked(), radioChecked()));
-  else {
-    alert("veuillez remplir les champs vides !");
+  if (!valuePrenom) {
+    erreur = " prénom manquant";
+    inputValidation(prenom, erreur);
+  }
+  if (!valueNom) {
+    erreur = " Nom manquant";
+    inputValidation(nom, erreur);
+  }
+  if (!valueEmail) {
+    erreur = " Email manquant";
+    inputValidation(email, erreur);
+  }
+  if (!valueNaissance) {
+    erreur = " Date de naissance manquante";
+    inputValidation(naissance, erreur);
+  }
+  if (!valueNombre) {
+    erreur = " Nombre manquant";
+    inputValidation(nombre, erreur);
+  }
+  if ((!cgvChecked(), !radioChecked())) {
+    e.preventDefault();
   }
 });
 
-// function validate() {
-//   "click", launchModal;
-
-//   // launch modal form
-//   function launchModal() {
-//     modalbg.style.display = "block";
-//   }
-// }
+function validate() {
+  if (valuePrenom && valueNom && valueEmail && valueNaissance && valueNombre) {
+    launchModalThx();
+    console.log("formulaire valide");
+  } else {
+    console.log("pas valide");
+  }
+}
