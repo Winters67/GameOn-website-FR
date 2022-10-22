@@ -11,9 +11,10 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-
-const ModalThx = document.querySelector(".bg");
-const modalThx = document.querySelectorAll(".modal-btn2");
+const spanCloseModal = document.getElementsByClassName("close")[0];
+const spanCloseModalThx = document.getElementsByClassName("closeThx")[0];
+const ModalThx = document.querySelector(".bgroundThx");
+const modalThx = document.querySelectorAll(".thx-close");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -24,21 +25,25 @@ function launchModal() {
   closeModalThx();
 }
 
-// Close modal
-const closeModal = document.getElementsByClassName("close")[0];
-closeModal.onclick = function () {
+spanCloseModal.onclick = function () {
   modalbg.style.display = "none";
   document.getElementById("reserve").reset();
 };
+
+function closeModal() {
+  modalbg.style.display = "none";
+  document.getElementById("reserve").reset();
+}
 
 // Modal THX
 function launchModalThx() {
   ModalThx.style.display = "block";
 }
-
 // Close modal THX
 function closeModalThx() {
   ModalThx.style.display = "none";
+  modalThx.forEach((btn) => btn.addEventListener("click", closeModal));
+  document.getElementById("reserve").reset();
 }
 
 // Déclaration variable
@@ -227,7 +232,7 @@ function radioChecked() {
   }
 }
 // condition général -------------------------------
-function cgvChecked(e) {
+function cgvChecked() {
   let radio = "";
   for (let i = 0, length = radiocgv.length; i < length; i++) {
     if (radiocgv[i].checked) {
@@ -244,6 +249,8 @@ function cgvChecked(e) {
   } else {
     cgvContainer.removeAttribute("data-error-visible");
     cgvContainer.removeAttribute("data-error");
+    console.log("je retourne true");
+    return true;
   }
 }
 
@@ -270,14 +277,24 @@ reserve.addEventListener("submit", function (e) {
     erreur = " Nombre manquant";
     inputValidation(nombre, erreur);
   }
-  if ((!cgvChecked(), !radioChecked())) {
-    e.preventDefault();
+  if ((cgvChecked(), radioChecked()));
+  else {
+    console.log("Champs du formulaire incomplet");
   }
 });
 
 function validate() {
-  if (valuePrenom && valueNom && valueEmail && valueNaissance && valueNombre) {
+  if (
+    valuePrenom &&
+    valueNom &&
+    valueEmail &&
+    valueNaissance &&
+    valueNombre &&
+    cgvChecked() === true &&
+    radioChecked() === true
+  ) {
     launchModalThx();
+
     console.log("formulaire valide");
   } else {
     console.log("pas valide");
