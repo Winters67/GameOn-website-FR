@@ -228,6 +228,7 @@ main {
 
   .modal-body {
     padding-bottom: 30px;
+    
 
   }
 
@@ -258,6 +259,13 @@ main {
   position: relative;
   color: #fff;
   padding-top: 10px;
+}
+.contentThx {
+
+  display: flex;
+  
+
+ min-height: 809px;
 }
 
 .modal-body, .modal-bodyThx {
@@ -427,6 +435,34 @@ input[data-error]::after {
   color: #fff;
   cursor: pointer;
   border: 0;
+}
+.modal-bodyThx {
+  display: flex;
+  flex-direction: column;
+    justify-content: space-between;
+    margin-top: 30vh;
+}
+
+.modal-bodyThx p {
+
+  text-align: center;
+  font-size: 2.5rem;
+font-weight: normal;
+}
+
+
+
+.btn-close {
+  background: #fe142f;
+  display: block;
+  margin: 0 auto;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 12px 82px;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  display: flex;
 }
 
 /* custom select styles */

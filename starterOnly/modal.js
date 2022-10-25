@@ -8,6 +8,8 @@ function editNav() {
 }
 
 // DOM Elements
+// declaration des variables
+
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
@@ -15,11 +17,20 @@ const spanCloseModal = document.getElementsByClassName("close")[0];
 const spanCloseModalThx = document.getElementsByClassName("closeThx")[0];
 const ModalThx = document.querySelector(".bgroundThx");
 const modalThx = document.querySelectorAll(".thx-close");
+const prenom = document.getElementById("first");
+const nom = document.getElementById("last");
+const email = document.getElementById("email");
+const naissance = document.getElementById("birthdate");
+const nombre = document.getElementById("quantity");
+const locationName = document.getElementsByName("location");
+const radiocgv = document.getElementsByName("radioCgv");
+const radioContainer = document.getElementById("radio");
+const cgvContainer = document.getElementById("cgv");
 
-// launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// launch modal form
+// Modal d'inscription
+// ouverture
 function launchModal() {
   modalbg.style.display = "block";
   closeModalThx();
@@ -28,13 +39,13 @@ function launchModal() {
 spanCloseModal.onclick = function () {
   modalbg.style.display = "none";
   document.getElementById("reserve").reset();
+  location.reload();
 };
 
 function closeModal() {
   modalbg.style.display = "none";
-  document.getElementById("reserve").reset();
 }
-
+// Modal de remerciement
 // Modal THX
 function launchModalThx() {
   ModalThx.style.display = "block";
@@ -45,17 +56,6 @@ function closeModalThx() {
   modalThx.forEach((btn) => btn.addEventListener("click", closeModal));
   document.getElementById("reserve").reset();
 }
-
-// Déclaration variable
-const prenom = document.getElementById("first");
-const nom = document.getElementById("last");
-const email = document.getElementById("email");
-const naissance = document.getElementById("birthdate");
-const nombre = document.getElementById("quantity");
-const locationName = document.getElementsByName("location");
-const radiocgv = document.getElementsByName("radioCgv");
-const radioContainer = document.getElementById("radio");
-const cgvContainer = document.getElementById("cgv");
 
 // les regex ------------------------------------------------
 
@@ -114,14 +114,11 @@ prenom.addEventListener("input", (e) => {
     erreur = "les caractères spéciaux ne sont pas autorisés";
     inputValidation(prenom, erreur);
     valuePrenom = null;
-    console.log(valuePrenom);
   }
   if (e.target.value.match(regexName)) {
     inputInValidation(prenom, erreur);
     valuePrenom = e.target.value;
     console.log("succes regex prénom");
-    console.log(valuePrenom);
-    return true;
   }
 });
 
@@ -134,7 +131,6 @@ nom.addEventListener("input", (e) => {
     console.log("rien");
     inputValidation(nom, erreur);
     valueNom = null;
-    console.log(valueNom);
   } else if (e.target.value.length < 2 || e.target.value.length > 25) {
     erreur = "veuillez entrer 2 caractères ou plus dans le champ nom ";
     inputValidation(nom, erreur);
@@ -153,7 +149,6 @@ nom.addEventListener("input", (e) => {
     inputInValidation(nom, erreur);
     valueNom = e.target.value;
     console.log("succes regex nom");
-    console.log(valueNom);
   }
 });
 
@@ -228,6 +223,7 @@ function radioChecked() {
   } else {
     radioContainer.removeAttribute("data-error-visible");
     radioContainer.removeAttribute("data-error");
+    console.log("je retourne true / test villes ");
     return true;
   }
 }
@@ -249,12 +245,13 @@ function cgvChecked() {
   } else {
     cgvContainer.removeAttribute("data-error-visible");
     cgvContainer.removeAttribute("data-error");
-    console.log("je retourne true");
+    console.log("je retourne true / test CGV ");
     return true;
   }
 }
 
 // envoi du formulaire
+
 reserve.addEventListener("submit", function (e) {
   e.preventDefault();
   if (!valuePrenom) {
@@ -283,6 +280,8 @@ reserve.addEventListener("submit", function (e) {
   }
 });
 
+// verification du formulaire
+
 function validate() {
   if (
     valuePrenom &&
@@ -295,8 +294,8 @@ function validate() {
   ) {
     launchModalThx();
 
-    console.log("formulaire valide");
+    console.log("le formulaire est  valide");
   } else {
-    console.log("pas valide");
+    console.log("le formulaire n'est pas valide");
   }
 }
