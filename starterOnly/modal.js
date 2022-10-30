@@ -33,9 +33,14 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // ouverture
 function launchModal() {
   modalbg.style.display = "block";
+  // fixe le bg à l'ouverture de la modal
+  const scrollY = document.body.style.top;
+  document.body.style.position = "fixed";
+  document.body.style.top = "";
+  window.scrollTo(0, parseInt(scrollY || "0") * -1);
   closeModalThx();
 }
-
+// ferme la modal
 spanCloseModal.onclick = function () {
   modalbg.style.display = "none";
   document.getElementById("reserve").reset();
@@ -62,6 +67,7 @@ function closeModalThx() {
 const regexName = /^[a-z A-Z]{2,25}$/;
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+// variable qui stocke les valeurs des conditions
 let valuePrenom,
   valueNom,
   valueEmail,
@@ -94,18 +100,22 @@ function inputInValidation(e) {
 // Prénom ------------ ------------------------------------------------------
 prenom.addEventListener("input", (e) => {
   valuePrenom;
-
+  // test si champs prenom replis
   if (e.target.value.length == 0) {
     console.log("rien");
+    // affiche le message d'erreur
     erreur = " prénom manquant";
     inputValidation(prenom, erreur);
+    // si rien retourne null
     valuePrenom = null;
     console.log(valuePrenom);
+    // test  le nombre de caractère entre 2 et 25
   } else if (e.target.value.length < 2 || e.target.value.length > 25) {
     erreur = "veuillez entrer 2 caractères ou plus dans le champ prénom ";
     inputValidation(prenom, erreur);
     valuePrenom = null;
   }
+  // verifie si les caractères conrespondent au regex
   if (
     !e.target.value.match(regexName) &&
     e.target.value.length > 3 &&
@@ -115,6 +125,7 @@ prenom.addEventListener("input", (e) => {
     inputValidation(prenom, erreur);
     valuePrenom = null;
   }
+  // si ok retourne la valeur dans valuePrenom
   if (e.target.value.match(regexName)) {
     inputInValidation(prenom, erreur);
     valuePrenom = e.target.value;
@@ -156,17 +167,21 @@ nom.addEventListener("input", (e) => {
 
 email.addEventListener("input", (e) => {
   valueEmail;
+  // si le champs est vide retourne une erreur
   if (e.target.value.length == 0) {
     erreur = " Email manquant";
     console.log("rien");
+    // retourne l'erreur
     inputValidation(email, erreur);
     valueEmail = null;
     console.log(valueEmail);
+    // test la regex avec le champs
   } else if (e.target.value.match(regexEmail)) {
     inputInValidation(email, erreur);
     valueEmail = e.target.value;
     console.log("succes regex Email");
   }
+  // si diffferent de target.value affiche erreur
   if (!e.target.value.match(regexEmail) && !e.target.value.length == 0) {
     erreur = "Veuillez saisir une adresse e-mail valide :  example@email.com ";
     inputValidation(email, erreur);

@@ -121,8 +121,24 @@ img {
     float: right;
     display: block;
     margin-top: -15px;
+  }
 
-
+  .topnav a:hover {
+    background-color: white;
+    color: #ff0000;
+    border-radius: 15px;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+  
+  .topnav a.active {
+    background-color: white;
+    color: #ff0000;
+    border-radius: 15px;
+  }
+  
+  .topnav .icon {
+    display: none;
   }
 
   .header-logo img {
@@ -245,6 +261,12 @@ main {
     margin: 0;
 
 
+  }
+
+  .content  {
+    
+   height: 900px;
+  
   }
 
 
